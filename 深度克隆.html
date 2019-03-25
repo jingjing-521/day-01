@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象的深度克隆</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+//    let obj={name:'kobe',age:20}
+//    console.log(obj.toString());
+//
+//
+//    let arr=[2,22,46,10,55,3,4,5]
+//    console.log(arr.sort().join());
+//
+
+//判断数据是什么类型
+
+    function getType(target) {
+        return Object.prototype.toString.call(target).slice(8,-1)
+    }
+
+/**
+ * 深度克隆
+ * @param target
+ * @returns {*}
+ */
+    function clone(target) {
+        let result
+        if (getType(target)==='Object'){
+            result={}
+        }else if (getType(target)==='Array'){
+            result=[]
+        }else {
+            return target
+        }
+
+        for (let key in target) {
+            let item=target[key]
+            if (getType(item)==='Object'){
+                result[key]=clone(item)
+            }else {
+                result[key]=item
+            }
+        }
+
+
+        return result
+    }
+
+let obj={name:'kobe',age:'30',sex:{option:'男',option2:'女'},getInfo:function demo() {
+    return this.name+''+this.age
+}}
+let obj2=clone(obj)
+
+obj.sex.option2='不男不女'
+console.log(obj,obj2);
+</script>
+</body>
+</html>
